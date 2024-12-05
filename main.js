@@ -403,61 +403,7 @@ function generateSelectedTriads(cyclicScales, chunks) {
 }
 
 
-document.getElementById('triadas').addEventListener('click', () => {
-    chunks = [];
-    // Iterar sobre las filas12
-    for (let i = 1; i <= rows; i++) {
-        const normalTriad = document.querySelector(`#normal-triad-${i}`).checked;
-        const sevenNote = document.querySelector(`#seven-note-${i}`).checked;
 
-        const firstInversion = document.querySelector(`#first-inversion-${i}`).checked;
-        const secondInversion = document.querySelector(`#second-inversion-${i}`).checked;
-        const thirdInversion = document.querySelector(`#third-inversion-${i}`).checked;
-
-        // Combinaciones solo para normal-triad y seven-note
-        if (normalTriad || sevenNote) {
-            // Combinaciones para normal-triad con inversiones
-            if (normalTriad) {
-                chunks.push(`"normal-triad-${i}"`);
-                if (firstInversion) chunks.push(`"normal-triad-first-inversion-${i}"`);
-                if (secondInversion) chunks.push(`"normal-triad-second-inversion-${i}"`);
-                if (thirdInversion) chunks.push(`"normal-triad-third-inversion-${i}"`);
-            }
-
-            // Combinaciones para seven-note con inversiones
-            if (sevenNote) {
-                chunks.push(`"seven-note-${i}"`);
-                if (firstInversion) chunks.push(`"seven-note-first-inversion-${i}"`);
-                if (secondInversion) chunks.push(`"seven-note-second-inversion-${i}"`);
-                if (thirdInversion) chunks.push(`"seven-note-third-inversion-${i}"`);
-            }
-        }
-    }
-
-    // Guardar una copia en chunksAuxiliar
-    chunksAuxiliar = chunks;
-
-    // Mostrar las combinaciones seleccionadas en la consola
-    console.log("este es el chunks que produce el submit ", chunks);
-});
-
-// Evento para "triadas", atento a cambios en chunks
-document.getElementById('triadas').addEventListener('click', () => {
-
-    generateSelectedTriads(cyclicScaleSubset, chunks);
-
-    selectedTriads = [];
-
-    chunksAuxiliar = chunksAuxiliar.map(chunk => chunk.replace(/['"]+/g, ''));
-
-    console.log("este es el chunk auxiliar q me está llegando desde el front end a triadas", chunksAuxiliar)
-
-
-
-    generateSelectedTriads(cyclicScaleSubset, chunksAuxiliar)
-    console.log("estas son las triadas generadas por el boton triadas", selectedTriads)
-
-})
 
 
 
@@ -500,7 +446,7 @@ const notaMinimaSelect = document.getElementById('notaMinima');
 const notaMaximaSelect = document.getElementById('notaMaxima');
 const resultado = document.getElementById('resultado');
 const combinacionesDiv = document.getElementById('combinaciones');
-const calcularCombinacionesBtn = document.getElementById('calcularCombinaciones');
+
 
 // Llenar los select con las notas disponibles
 allPianoNotes.forEach((note, index) => {
@@ -669,18 +615,6 @@ let conjuntoDeRangos = []
 
 
 
-calcularCombinacionesBtn.addEventListener('click', () => {
-
-    const rangoDisponible = convertirNotas(generarNotasSeleccionadas())
-
-    console.log("conjuntodeRangos", aplicarFiltrarNotas(rangoDisponible, selectedTriads))
-    conjuntoDeRangos = aplicarFiltrarNotas(rangoDisponible, selectedTriads)
-
-    console.log("triadasDescDefinitivas", aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango))
-
-
-
-});
 
 
 
@@ -692,18 +626,8 @@ let minBeats = 8;
 let maxBeats = 8;
 let loopActive = false; // Estado de bucle
 
-document.getElementById('apply').addEventListener('click', () => {
-    minBeats = parseFloat(document.getElementById('minBeats').value);
-    maxBeats = parseFloat(document.getElementById('maxBeats').value);
 
-    const bpm = parseFloat(document.getElementById('bpm').value);
-    Tone.Transport.bpm.value = bpm;
 
-    console.clear();
-    console.log(
-        `Configuración actualizada: Min. Negras=${minBeats}, Máx. Negras=${maxBeats}, BPM=${bpm}`
-    );
-});
 
 function getRandomBeats(min, max) {
     return min === max ? min : Math.random() * (max - min) + min;
@@ -806,10 +730,64 @@ function aleatorizarOrden(array) {
     }
     return copia;
   }
-document.getElementById("selectArraysButton").addEventListener("click", function () {
-    
-    const n = parseInt(document.getElementById("numArrays").value);
+  document.getElementById("selectArraysButton").addEventListener("click", function () {
+    // Inicializar variables y limpiar datos previos
+    chunks = [];
+    selectedTriads = [];
     const resultDiv = document.getElementById("result");
+
+    // Configuración de triadas
+    for (let i = 1; i <= rows; i++) {
+        const normalTriad = document.querySelector(`#normal-triad-${i}`).checked;
+        const sevenNote = document.querySelector(`#seven-note-${i}`).checked;
+
+        const firstInversion = document.querySelector(`#first-inversion-${i}`).checked;
+        const secondInversion = document.querySelector(`#second-inversion-${i}`).checked;
+        const thirdInversion = document.querySelector(`#third-inversion-${i}`).checked;
+
+        if (normalTriad || sevenNote) {
+            if (normalTriad) {
+                chunks.push(`"normal-triad-${i}"`);
+                if (firstInversion) chunks.push(`"normal-triad-first-inversion-${i}"`);
+                if (secondInversion) chunks.push(`"normal-triad-second-inversion-${i}"`);
+                if (thirdInversion) chunks.push(`"normal-triad-third-inversion-${i}"`);
+            }
+
+            if (sevenNote) {
+                chunks.push(`"seven-note-${i}"`);
+                if (firstInversion) chunks.push(`"seven-note-first-inversion-${i}"`);
+                if (secondInversion) chunks.push(`"seven-note-second-inversion-${i}"`);
+                if (thirdInversion) chunks.push(`"seven-note-third-inversion-${i}"`);
+            }
+        }
+    }
+
+    chunksAuxiliar = chunks.map(chunk => chunk.replace(/['"]+/g, ''));
+    console.log("Chunks procesados: ", chunksAuxiliar);
+
+    // Generar triadas seleccionadas
+    generateSelectedTriads(cyclicScaleSubset, chunksAuxiliar);
+    console.log("Triadas generadas: ", selectedTriads);
+
+    // Configurar rango de notas
+    const rangoDisponible = convertirNotas(generarNotasSeleccionadas());
+    conjuntoDeRangos = aplicarFiltrarNotas(rangoDisponible, selectedTriads);
+    console.log("Conjunto de rangos: ", conjuntoDeRangos);
+
+    // Procesar rango final
+    const procesadoFinal = aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango);
+    console.log("Procesado final: ", procesadoFinal);
+
+    // Configurar el tempo y beats
+    const minBeats = parseFloat(document.getElementById("minBeats").value);
+    const maxBeats = parseFloat(document.getElementById("maxBeats").value);
+    const bpm = parseFloat(document.getElementById("bpm").value);
+    Tone.Transport.bpm.value = bpm;
+
+    console.log(`Configuración: Min Beats=${minBeats}, Max Beats=${maxBeats}, BPM=${bpm}`);
+
+    // Selección de arrays
+    const n = parseInt(document.getElementById("numArrays").value);
     const isAscChecked = document.getElementById("ascendente").checked;
     const isDescChecked = document.getElementById("descendente").checked;
 
@@ -819,20 +797,16 @@ document.getElementById("selectArraysButton").addEventListener("click", function
     }
 
     if (isAscChecked && isDescChecked) {
-        const array1=getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n)
-        const array2=invertirElementos(getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n))
-        const mezclados = array1.concat(array2)
-        selectedArrays = aleatorizarOrden(eliminarImpares(mezclados))
-        console.log("eliminarimparesmezclados desde selectarraybutton",selectedArrays)
-
+        const array1 = getRandomSubarrays(removeFirstLevel(procesadoFinal), n);
+        const array2 = invertirElementos(getRandomSubarrays(removeFirstLevel(procesadoFinal), n));
+        const mezclados = array1.concat(array2);
+        selectedArrays = aleatorizarOrden(eliminarImpares(mezclados));
+        console.log("Arrays mezclados: ", selectedArrays);
     } else if (isAscChecked) {
-        // Solo ascendente
-        selectedArrays = getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n);
+        selectedArrays = getRandomSubarrays(removeFirstLevel(procesadoFinal), n);
     } else if (isDescChecked) {
-        // Solo descendente
-        selectedArrays = invertirElementos(getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n));
+        selectedArrays = invertirElementos(getRandomSubarrays(removeFirstLevel(procesadoFinal), n));
     } else {
-        // Ninguno está marcado
         selectedArrays = [];
         resultDiv.textContent = "Por favor, selecciona al menos una opción.";
         return;
@@ -840,8 +814,7 @@ document.getElementById("selectArraysButton").addEventListener("click", function
 
     resultDiv.textContent = `Arrays seleccionados: ${JSON.stringify(selectedArrays)}`;
 });
-//const melodies = removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos,selectedTriads,procesarRango)) 
-// generar a partir del generar secuencias que selecciona una cantidad X, de triadas en el dom
+
 
 
 
