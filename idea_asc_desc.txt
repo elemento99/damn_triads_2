@@ -1,0 +1,109 @@
+    selectedTriadsDesc = invertirElementos(selectedTriads);
+
+selectedTriadsAscDesc = mezclarArrays(
+        selectedTriads,
+        selectedTriadsDesc
+    );
+
+// desde aqui
+
+considerando estos elementos del dom "    <label>
+      <input type="checkbox" id="ascendente" name="ascendente" checked />
+      Tríadas Ascendentes
+    </label>
+    <br />
+    <label>
+      <input type="checkbox" id="descendente" name="descendente" checked />
+      Tríadas Descendentes
+    </label>"
+
+
+quiero cambiar como se rellena el selectedArrays
+let selectedArrays=[]
+document.getElementById("selectArraysButton").addEventListener("click", function() {
+    const n = parseInt(document.getElementById("numArrays").value);
+    const resultDiv = document.getElementById("result");
+    
+    if (isNaN(n) || n <= 0) {
+        resultDiv.textContent = "Por favor, introduce un número válido.";
+    } else {
+        selectedArrays = getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos,selectedTriads,procesarRango)) , n);
+        resultDiv.textContent = `Arrays seleccionados: ${JSON.stringify(selectedArrays)}`;
+    }
+});
+
+
+quiero que el selectedArrays se pueda producir de 3 formas distintas de acuerdo a estos 3 casos
+1) si ascendente is checked
+getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n);
+
+2) si descendente is checked
+invertirElementos(getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n);)
+
+3) si asc y descendente is checked
+mezclarArrays(
+        getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n);
+        invertirElementos(getRandomSubarrays(removeFirstLevel(aplicarProcesarRango(conjuntoDeRangos, selectedTriads, procesarRango)), n);)
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    calcularCombinacionesBtn.addEventListener('click', () => {
+        const rangoDisponible = convertirNotas(generarNotasSeleccionadas());
+        let conjuntoDeRangos;
+    
+        if (ascendenteCheckbox.checked && descendenteCheckbox.checked) {
+            conjuntoDeRangos = aplicarFiltrarNotas(
+                rangoDisponible,
+                selectedTriadsAscDesc
+            );
+        } else if (ascendenteCheckbox.checked) {
+            conjuntoDeRangos = aplicarFiltrarNotas(
+                rangoDisponible,
+                selectedTriads
+            );
+        } else if (descendenteCheckbox.checked) {
+            conjuntoDeRangos = aplicarFiltrarNotas(
+                rangoDisponible,
+                selectedTriadsDesc
+            );
+        } else {
+            console.log('Por favor selecciona al menos una opción.');
+            return; // Sale del evento si no hay selección
+        }
+    
+        // Aquí puedes continuar con el manejo del conjuntoDeRangos
+        console.log('Conjunto de rangos generado:', conjuntoDeRangos);
+    });
+    
+    // Listeners para las casillas de verificación (opcional, para control adicional)
+    ascendenteCheckbox.addEventListener('change', () => {
+        console.log(
+            `Ascendente ${ascendenteCheckbox.checked ? 'seleccionado' : 'deseleccionado'
+            }`
+        );
+    });
+    
+    descendenteCheckbox.addEventListener('change', () => {
+        console.log(
+            `Descendente ${descendenteCheckbox.checked ? 'seleccionado' : 'deseleccionado'
+            }`
+        );
+    });
