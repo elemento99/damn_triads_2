@@ -11,147 +11,148 @@
 <body>
     <div class="container"></div>
     <div class="selector-container">
-      <select id="key">
-        <option value="C">Key: C</option>
-        <option value="C#">Key: C# / Db</option>
-        <option value="D">Key: D</option>
-        <option value="D#">Key: D# / Eb</option>
-        <option value="E">Key: E</option>
-        <option value="F">Key: F</option>
-        <option value="F#">Key: F# / Gb</option>
-        <option value="G">Key: G</option>
-        <option value="G#">Key: G# / Ab</option>
-        <option value="A">Key: A</option>
-        <option value="A#">Key: A# / Bb</option>
-        <option value="B">Key: B</option>
-      </select>
-      <select class="selector" id="selector-1"></select>
-      <select class="selector" id="selector-2"></select>
-      <select class="selector" id="selector-3"></select>
-      <select class="selector" id="selector-4"></select>
-      <select class="selector" id="selector-5"></select>
-      <select class="selector" id="selector-6"></select>
+        <select id="key">
+            <option value="C">Key: C</option>
+            <option value="C#">Key: C# / Db</option>
+            <option value="D">Key: D</option>
+            <option value="D#">Key: D# / Eb</option>
+            <option value="E">Key: E</option>
+            <option value="F">Key: F</option>
+            <option value="F#">Key: F# / Gb</option>
+            <option value="G">Key: G</option>
+            <option value="G#">Key: G# / Ab</option>
+            <option value="A">Key: A</option>
+            <option value="A#">Key: A# / Bb</option>
+            <option value="B">Key: B</option>
+        </select>
+        <select class="selector" id="selector-1"></select>
+        <select class="selector" id="selector-2"></select>
+        <select class="selector" id="selector-3"></select>
+        <select class="selector" id="selector-4"></select>
+        <select class="selector" id="selector-5"></select>
+        <select class="selector" id="selector-6"></select>
     </div>
 
     <div id="selected-values"></div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Grado</th>
-          <th>
-            Normal Triad<br />
-            <input type="checkbox" id="toggle-normal-triad" />
-          </th>
-          <th>
-            7 Note<br />
-            <input type="checkbox" id="toggle-seven-note" />
-          </th>
-          <th>
-            1st Inversion<br />
-            <input type="checkbox" id="toggle-first-inversion" />
-          </th>
-          <th>
-            2nd Inversion<br />
-            <input type="checkbox" id="toggle-second-inversion" />
-          </th>
-          <th>
-            3rd Inversion<br />
-            <input type="checkbox" id="toggle-third-inversion" />
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <script>
-          const rows = 7;
-          for (let i = 1; i <= rows; i++) {
-            document.write(`
-          <tr>
-            <td>${i}</td>
-            <td><input type="checkbox" id="normal-triad-${i}" class="normal-triad" data-row="${i}" checked></td>
-            <td><input type="checkbox" id="seven-note-${i}" class="seven-note" data-row="${i}"></td>
-            <td><input type="checkbox" id="first-inversion-${i}" class="first-inversion" data-row="${i}" disabled></td>
-            <td><input type="checkbox" id="second-inversion-${i}" class="second-inversion" data-row="${i}" disabled></td>
-            <td><input type="checkbox" id="third-inversion-${i}" class="third-inversion" data-row="${i}" disabled></td>
-          </tr>
-        `);
-          }
-        </script>
-      </tbody>
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Grado</th>
+                    <th>
+                        Normal Triad<br />
+                        <input type="checkbox" id="toggle-normal-triad" />
+                    </th>
+                    <th>
+                        7 Note<br />
+                        <input type="checkbox" id="toggle-seven-note" />
+                    </th>
+                    <th>
+                        1st Inversion<br />
+                        <input type="checkbox" id="toggle-first-inversion" />
+                    </th>
+                    <th>
+                        2nd Inversion<br />
+                        <input type="checkbox" id="toggle-second-inversion" />
+                    </th>
+                    <th>
+                        3rd Inversion<br />
+                        <input type="checkbox" id="toggle-third-inversion" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <script>
+                    const rows = 7;
+                    for (let i = 1; i <= rows; i++) {
+                        document.write(`
+                        <tr>
+                            <td>${i}</td>
+                            <td><input type="checkbox" id="normal-triad-${i}" class="normal-triad" data-row="${i}" checked></td>
+                            <td><input type="checkbox" id="seven-note-${i}" class="seven-note" data-row="${i}"></td>
+                            <td><input type="checkbox" id="first-inversion-${i}" class="first-inversion" data-row="${i}" disabled></td>
+                            <td><input type="checkbox" id="second-inversion-${i}" class="second-inversion" data-row="${i}" disabled></td>
+                            <td><input type="checkbox" id="third-inversion-${i}" class="third-inversion" data-row="${i}" disabled></td>
+                        </tr>
+                    `);
+                    }
+                </script>
+            </tbody>
+        </table>
+    </div>
 
     <button id="selectAllBtn">Marcar Todas</button>
 
-    <label>
-      <input type="checkbox" id="ascendente" name="ascendente" checked />
-      Tríadas Ascendentes
-    </label>
-    <br />
-    <label>
-      <input type="checkbox" id="descendente" name="descendente" checked />
-      Tríadas Descendentes
-    </label>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="ascendente" name="ascendente" checked />
+            Tríadas Ascendentes
+        </label>
+        <br />
+        <label>
+            <input type="checkbox" id="descendente" name="descendente" checked />
+            Tríadas Descendentes
+        </label>
+    </div>
 
-    <button id="triadas">triadas para tonalidad</button>
+    <button id="triadas" class="hidden">triadas para tonalidad</button>
 
     <h1>Generador de Notas Musicales</h1>
 
-    <label for="notaMinima">Nota Mínima:</label>
-    <select id="notaMinima">
-      <!-- Opciones de notas se llenarán dinámicamente con JavaScript -->
-    </select>
-
-    <label for="notaMaxima">Nota Máxima:</label>
-    <select id="notaMaxima">
-      <!-- Opciones de notas se llenarán dinámicamente con JavaScript -->
-    </select>
-
-    <div>
-      <h3>Notas Seleccionadas:</h3>
-      <p id="resultado">Selecciona un rango de notas</p>
+    <div class="form-group">
+        <label for="notaMinima">Nota Mínima:</label>
+        <select id="notaMinima">
+            <!-- Opciones de notas se llenarán dinámicamente con JavaScript -->
+        </select>
     </div>
 
-
-
-
-
-    <div>
-      <label for="minBeats">minima pausa</label>
-      <input type="number" id="minBeats" value="8" min="8" />
-
-      <label for="maxBeats">máxima pausa</label>
-      <input type="number" id="maxBeats" value="8" min="8" />
+    <div class="form-group">
+        <label for="notaMaxima">Nota Máxima:</label>
+        <select id="notaMaxima">
+            <!-- Opciones de notas se llenarán dinámicamente con JavaScript -->
+        </select>
     </div>
 
-    <div>
-      <label for="bpm">Velocidad Triadas</label>
-      <input type="number" id="bpm" value="250" min="30" max="500" />
+    <div class="hidden">
+        <h3>Notas Seleccionadas:</h3>
+        <p id="resultado">Selecciona un rango de notas</p>
+    </div>
+
+    <div class="form-group">
+        <label for="minBeats">Mínima Pausa:</label>
+        <input type="number" id="minBeats" class="small-input" value="8" min="8" />
+        <label for="maxBeats">Máxima Pausa:</label>
+        <input type="number" id="maxBeats" class="small-input" value="8" min="8" />
+    </div>
+
+    <div class="form-group">
+        <label for="bpm">Velocidad Triadas:</label>
+        <input type="number" id="bpm" value="250" min="30" max="500" />
     </div>
 
     <h1>Generar triadas aleatorias</h1>
 
-    <!-- Botón y campo de entrada -->
-    <label for="numArrays">Cantidad de triadas a generar</label>
-    <input
-      type="number"
-      id="numArrays"
-      placeholder="Ingrese cantidad"
-      min="1"
-    />
-    <button id="selectArraysButton">Seleccionar</button>
-
-    <div id="result"></div>
-    
-    <button id="play">Comenzar Reproducción</button>
-    <button id="loop">Reproducción en Bucle</button>
-
-    <div>
-      <h1>triadas con ritmo</h1>
-      <button id="dinamicPlay">Play</button>
- 
+    <div class="form-group">
+        <label for="numArrays">Cantidad de Triadas a Generar:</label>
+        <input
+            type="number"
+            id="numArrays"
+            placeholder="Ingrese cantidad"
+            min="1"
+        />
+        <button id="selectArraysButton">Seleccionar</button>
     </div>
 
+    <div id="result"></div>
 
+    <button id="play">Comenzar Reproducción LINEAL</button>
+    <button id="loop">Reproducción LINEAL en Bucle</button>
+
+    <div>
+        <h1>Triadas con Ritmo en Bucle</h1>
+        <div><button id="dinamicPlay">Play</button></div>
+    </div>
 
 </body>
 </html>

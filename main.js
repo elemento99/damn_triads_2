@@ -835,14 +835,21 @@ document.getElementById('play').addEventListener('click', async () => {
 });
 
 
-document.getElementById('loop').addEventListener('click', () => {
+document.getElementById('loop').addEventListener('click', async () => {
     loopActive = !loopActive;
     const loopButton = document.getElementById('loop');
     const melodies = selectedArrays;
+
     if (loopActive) {
+        if (Tone.Transport.state !== 'started') {
+            console.log('Inicializando Tone.js para reproducción en bucle...');
+            await Tone.start();
+            Tone.Transport.start();
+        }
         loopButton.textContent = 'Detener Bucle';
         console.log('Reproducción en bucle activada...');
-        // Inicia la reproducción en bucle usando el ritmo actual
+        
+        // Solo programa el transporte si no está en ejecución
         playMelodiesWithIntervals(
             melodies,
             minBeats,
@@ -852,6 +859,8 @@ document.getElementById('loop').addEventListener('click', () => {
     } else {
         loopButton.textContent = 'Reproducción en Bucle';
         console.log('Reproducción en bucle detenida...');
+        Tone.Transport.stop();
+        Tone.Transport.cancel(); // Detén y limpia eventos previos del transporte
     }
 });
 
