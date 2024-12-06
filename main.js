@@ -730,7 +730,7 @@ function aleatorizarOrden(array) {
     }
     return copia;
   }
-  document.getElementById("selectArraysButton").addEventListener("click", function () {
+  function processSelection() {
     // Inicializar variables y limpiar datos previos
     chunks = [];
     selectedTriads = [];
@@ -813,7 +813,13 @@ function aleatorizarOrden(array) {
     }
 
     resultDiv.textContent = `Arrays seleccionados: ${JSON.stringify(selectedArrays)}`;
-});
+}
+
+// Ejecutar al cargar el DOM
+document.addEventListener("DOMContentLoaded", processSelection);
+
+// Asociar al evento click del botón
+document.getElementById("selectArraysButton").addEventListener("click", processSelection);
 
 
 
@@ -974,5 +980,38 @@ document.getElementById('dinamicPlay').addEventListener('click', () => {
         playButton.textContent = 'Play'; // Cambiamos el texto del botón a "Play"
         console.log('Todos los sonidos detenidos.');
         isPlaying = false;
+    }
+});
+
+  // Código para abrir y cerrar el modal
+  const modal = document.getElementById("myModal");
+  const openModalBtn = document.getElementById("openModalBtn");
+
+  openModalBtn.onclick = function() {
+      modal.style.display = "block";
+  }
+
+  window.onclick = function(event) {
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+  }
+
+
+
+// Funcionalidad para mostrar/ocultar el div 'result' al hacer clic en el botón toggle
+const toggleButton = document.getElementById('toggleResult');
+const resultDiv = document.getElementById('result');
+
+toggleButton.addEventListener('click', function() {
+    // Cambiar el estado del div 'result'
+    if (resultDiv.style.display === 'none') {
+        resultDiv.style.display = 'block'; // Mostrar el div
+        toggleButton.classList.add('active'); // Agregar la clase active para cambiar el estilo
+        toggleButton.textContent = 'Ocultar'; // Cambiar el texto del botón
+    } else {
+        resultDiv.style.display = 'none'; // Ocultar el div
+        toggleButton.classList.remove('active'); // Eliminar la clase active
+        toggleButton.textContent = 'Mostrar'; // Cambiar el texto del botón
     }
 });
